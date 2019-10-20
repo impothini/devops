@@ -5,7 +5,7 @@ resource "aws_instance" "testbuild" {
   provisioner "local-exec" {
  	command ="echo ${aws_instance.testbuild.private_ip} >> private_ips.txt"
   }
-  tags = {
+  tags {
     Name = "HelloWorld"
   }
 }
