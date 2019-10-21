@@ -7,7 +7,7 @@ resource "aws_security_group" "allow-ssh" {
     # TLS (change to whatever ports you need)
     from_port   = 22
     to_port     = 22
-    protocol    = "-1"
+    protocol    = "tcp"
     cidr_blocks = ["99.166.69.161/32"]
   }
 
