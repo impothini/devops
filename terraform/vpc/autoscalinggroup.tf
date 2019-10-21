@@ -1,4 +1,5 @@
 resource "aws_autoscaling_group" "auto-scaling-group-1" {
+  name                      = "auto-scaling-group-1"
   desired_capacity          = 1
   max_size                  = 2
   min_size                  = 1
