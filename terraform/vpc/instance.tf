@@ -23,7 +23,7 @@ resource "aws_ebs_volume" "extra-volume-1" {
 }
 
 resource "aws_volume_attachment" "ebs-att-1" {
-  device_name = "${vars.INSTANCE_DEVICE_NAME}"
+  device_name = "${var.INSTANCE_DEVICE_NAME}"
   volume_id   = "${aws_ebs_volume.extra-volume-1.id}"
   instance_id = "${aws_instance.server1.id}"
 }
