@@ -11,3 +11,7 @@ variable "AMIS" {
     "us-east-2" = "ami-0d03add87774b12c5"
   }
 }
+
+variable "INSTANCE_DEVICE_NAME" {
+  default = "/dev/xvdh"
+}
