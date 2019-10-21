@@ -4,6 +4,7 @@ resource "aws_instance" "server1" {
   key_name        = "${aws_key_pair.mykey.key_name}"
   subnet_id       = "${aws_subnet.public-subnet-1.id}"
   security_groups = ["${aws_security_group.allow-ssh.id}"]
+  user_data       = "${data.template_cloudinit_config.cloudinit-example.rendered}"
 
   tags {
     name = "server1"
