@@ -9,3 +9,20 @@ resource "aws_instance" "server1" {
     name = "server1"
   }
 }
+
+#Add extra ebs volume
+resource "aws_ebs_volume" "extra-volume-1" {
+  availability_zone = "us-east-2b"
+  size              = 20
+  type              = "gp2"
+
+  tags {
+    Name = "extra-volume-1"
+  }
+}
+
+resource "aws_volume_attachment" "ebs-att-1" {
+  device_name = "/dev/sdh"
+  volume_id   = "${aws_ebs_volume.extra-volume-1.id}"
+  instance_id = "${aws_instance.server1.id}"
+}
