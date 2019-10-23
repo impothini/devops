@@ -13,7 +13,7 @@ resource "aws_instance" "server1" {
 
 #Add extra ebs volume
 resource "aws_ebs_volume" "extra-volume-1" {
-  availability_zone = "us-east-2b"
+  availability_zone = "${aws_instance.server1.availability_zone}"
   size              = 20
   type              = "gp2"
 

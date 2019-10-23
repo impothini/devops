@@ -6,6 +6,7 @@ resource "aws_autoscaling_group" "auto-scaling-group-1" {
   health_check_type         = "EC2"
   health_check_grace_period = 300
   vpc_zone_identifier       = ["${aws_subnet.public-subnet-3.id}", "${aws_subnet.public-subnet-2.id}"]
+  launch_configuration      = "${aws_launch_configuration.launch-config-server1.name}"
 
   tags {
     key                 = "Name"
