@@ -5,7 +5,7 @@ if [ -e /etc/redhat-release ] ; then
   REDHAT_BASED=true
 fi
 
-TERRAFORM_VERSION="0.11.7"
+#TERRAFORM_VERSION="0.11.7"
 PACKER_VERSION="1.2.4"
 # create new ssh key
 [[ ! -f /home/ubuntu/.ssh/mykey ]] \
@@ -19,14 +19,14 @@ if [ ${REDHAT_BASED} ] ; then
   yum install -y docker ansible unzip wget
 else 
   apt-get update
-  apt-get -y install docker.io ansible unzip
+  apt-get -y install docker.io ansible unzip wget
 fi
 # add docker privileges
 usermod -G docker ubuntu
 # install pip
 pip install -U pip && pip3 install -U pip
 if [[ $? == 127 ]]; then
-    wget -q https://bootstrap.pypa.io/get-pip.py
+    wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
     python get-pip.py
     python3 get-pip.py
 fi
@@ -37,11 +37,13 @@ pip install -U awsebcli
 #terraform
 T_VERSION=$(/usr/local/bin/terraform -v | head -1 | cut -d ' ' -f 2 | tail -c +2)
 T_RETVAL=${PIPESTATUS[0]}
+###################
+#Install terraform#
+###################
 
-[[ $T_VERSION != $TERRAFORM_VERSION ]] || [[ $T_RETVAL != 0 ]] \
-&& wget -q https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-&& unzip -o terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin \
-&& rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+apt-get update && sudo apt-get install terraform
 
 # packer
 P_VERSION=$(/usr/local/bin/packer -v)
